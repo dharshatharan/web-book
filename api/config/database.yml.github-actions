@@ -1,0 +1,8 @@
+test:
+	adapter: mysql2
+  host: localhost
+  encoding: utf8mb4
+  database: github-actions
+  pool: 20
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
