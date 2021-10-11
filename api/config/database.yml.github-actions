@@ -1,5 +1,6 @@
+
 test: &default
-	adapter: mysql2
+  adapter: mysql2
   host: localhost
   encoding: utf8mb4
   database: github-actions
