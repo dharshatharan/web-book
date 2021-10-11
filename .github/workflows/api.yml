@@ -33,6 +33,8 @@ jobs:
         run: |
           cd api
           cp config/database.yml.github-actions config/database.yml
+          mkdir /var/run/mysqld/
+          ln -s /tmp/mysql.sock /var/run/mysqld/mysqld.sock
           bundle exec rake db:create
           bundle exec rake db:schema:load
         env:
