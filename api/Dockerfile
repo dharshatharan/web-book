@@ -4,11 +4,8 @@ RUN apt-get update \
 	&& apt-get install -y \
 	nodejs \
 	build-essential \
-	# libmariadb-dev \
-	# mariadb-client \
 	default-mysql-client \
 	default-libmysqlclient-dev \
-	openssl \
 	&& rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
