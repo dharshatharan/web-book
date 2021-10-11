@@ -38,7 +38,7 @@ jobs:
         env:
           RAILS_ENV: test
           DB_USER: root
-          Db_PASSWORD: root
+          DB_PASSWORD: root
       - name: Run Rubocop
         run: |
           cd api
