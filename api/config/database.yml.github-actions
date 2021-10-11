@@ -1,4 +1,4 @@
-test:
+test: &default
 	adapter: mysql2
   host: localhost
   encoding: utf8mb4
