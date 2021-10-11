@@ -55,11 +55,11 @@ jobs:
         run: |
           cd api
           cp config/database.yml.github-actions config/database.yml
-          bundle exec rails db:prepare
+          bundle exec rails B:prepare
         env:
           RAILS_ENV: test
-          DB_USER: root
-          DB_PASSWORD: root
+          B_USER: root
+          B_PASSWORD: root
 
       - name: Run Rubocop
         run: |
@@ -73,7 +73,7 @@ jobs:
         env:
           RAILS_ENV: test
           DB_USER: root
-          Db_PASSWORD: root
+          DB_PASSWORD: root
 
       - name: RSpec Report
         uses: SonicGarden/rspec-report-action@v1
