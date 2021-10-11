@@ -55,11 +55,11 @@ jobs:
         run: |
           cd api
           cp config/database.yml.github-actions config/database.yml
-          bundle exec rails B:prepare
+          bundle exec rails db:prepare
         env:
           RAILS_ENV: test
-          B_USER: root
-          B_PASSWORD: root
+          DB_USER: root
+          DB_PASSWORD: root
 
       - name: Run Rubocop
         run: |
