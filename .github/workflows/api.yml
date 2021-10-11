@@ -55,8 +55,8 @@ jobs:
         run: |
           cd api
           cp config/database.yml.github-actions config/database.yml
-          sudo find / -type s
-          sudo chmod -R 755 /var/run/mysqld
+          find / -type s
+          ls -la /var/run/mysqld
           ps -A|grep mysqld
           bundle exec rails db:prepare
         env:
