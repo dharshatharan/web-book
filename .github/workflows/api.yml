@@ -34,7 +34,7 @@ jobs:
           cd api
           cp config/database.yml.github-actions config/database.yml
           sudo mkdir /var/run/mysqld/
-          sudo ln -s /tmp/mysql.sock /var/run/mysqld/mysqld.sock
+          sudo ln -s /var/run/mysqld/mysqld.sock /tmp/mysql.sock
           bundle exec rake db:create
           bundle exec rake db:schema:load
         env:
