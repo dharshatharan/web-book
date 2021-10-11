@@ -53,7 +53,7 @@ jobs:
         run: |
           cd api
           cp config/database.yml.github-actions config/database.yml
-          buncle exec rails db:prepare
+          bundle exec rails db:prepare
         env:
           RAILS_ENV: test
           DB_USER: root
