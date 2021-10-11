@@ -24,7 +24,7 @@ services:
         build:
             context: ./api
             dockerfile: Dockerfile
-        command: bash -c "cd api && rm -f tmp/pids/server.pid && bundle exec rails db:setup && bundle exec rails s -p 5000 -b '0.0.0.0'"
+        command: bash -c "cd api && rm -f tmp/pids/server.pid && bundle exec rails db:prepare && bundle exec rails s -p 5000 -b '0.0.0.0'"
         volumes:
             - .:/usr/src/app
         environment:
