@@ -4,50 +4,66 @@ name: API
 jobs:
   build:
     runs-on: ubuntu-latest
+
     services:
       mysql:
         image: 'mysql'
         env:
-            MYSQL_DATABASE: root
             MYSQL_ROOT_PASSWORD: root
         ports:
             - "3307:3306"
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
       redis:
         image: 'redis:alpine'
         ports:
           - '6379:6379'
+
     steps:
-      - uses: actions/checkout@v1
+      - uname: Checkout
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
       - name: Set up Ruby 3.0
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0.2
-      - name: Install dependent libraries
-        run: >-
-          sudo apt-get install
-          nodejs
-          build-essential
-          default-mysql-client
-          default-libmysqlclient-dev
+
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Verify MySQL connection from host
+        run: |
+          sudo apt-get install -y mysql-client libmysqlclient-dev
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW GRANTS FOR 'root'@'localhost'"
+          mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot mysql
+
       - name: Bundle install
         run: |
-          gem install bundler
           cd api
+          gem install bundler
           bundle install --jobs 4 --retry 3
+
       - name: Setup Database
         run: |
           cd api
           cp config/database.yml.github-actions config/database.yml
-          bundle exec rake db:create
-          bundle exec rake db:schema:load
+          buncle exec rails db:prepare
         env:
           RAILS_ENV: test
           DB_USER: root
           DB_PASSWORD: root
+
       - name: Run Rubocop
         run: |
           cd api
           rubocop
+
       - name: Run RSpec
         run: |
           cd api
@@ -56,6 +72,7 @@ jobs:
           RAILS_ENV: test
           DB_USER: root
           Db_PASSWORD: root
+
       - name: RSpec Report
         uses: SonicGarden/rspec-report-action@v1
         if: always()

@@ -8,4 +8,3 @@ test: &default
   pool: 20
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
-  socket: /var/lib/mysqld/mysqld.sock
