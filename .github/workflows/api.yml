@@ -23,7 +23,12 @@ jobs:
         with:
           ruby-version: 3.0.2
       - name: Install dependent libraries
-        run: sudo apt-get install default-libmysqlclient-dev
+        run: >-
+          sudo apt-get install
+          nodejs
+          build-essential
+          default-mysql-client
+          default-libmysqlclient-dev
       - name: Bundle install
         run: |
           gem install bundler
