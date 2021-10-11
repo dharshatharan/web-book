@@ -1,0 +1,48 @@
+version: '3.1'
+
+services:
+    db:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment:
+            MYSQL_DATABASE: "${MYSQL_DB_NAME}"
+            MYSQL_ROOT_PASSWORD: "${MYSQL_DB_PASSWORD}"
+        ports:
+            - "3307:3306"
+        networks:
+            - web-book
+
+    redis:
+        image: 'redis:alpine'
+        ports:
+            - '6379:6379'
+        networks:
+            - web-book
+
+    api:
+        build:
+            context: ./api
+            dockerfile: Dockerfile
+        command: bash -c "cd api && rm -f tmp/pids/server.pid && bundle exec rails db:setup && bundle exec rails s -p 5000 -b '0.0.0.0'"
+        volumes:
+            - .:/usr/src/app
+        environment:
+            DB_USER: "${MYSQL_DB_USER}"
+            DB_NAME: "${MYSQL_DB_NAME}"
+            DB_PASSWORD: "${MYSQL_DB_PASSWORD}"
+            DB_HOST: db
+        ports:
+            - "5000:5000"
+        depends_on:
+            - db
+            - redis
+        links:
+            - db
+            - redis
+        networks:
+            - web-book
+
+networks:
+    web-book:
+        driver: bridge
