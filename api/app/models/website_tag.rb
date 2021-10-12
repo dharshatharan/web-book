@@ -1,0 +1,2 @@
+class WebsiteTag < ApplicationRecord
+end

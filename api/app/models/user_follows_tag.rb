@@ -1,0 +1,2 @@
+class UserFollowsTag < ApplicationRecord
+end

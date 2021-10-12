@@ -1,0 +1,2 @@
+class UserFollowsWebsite < ApplicationRecord
+end
