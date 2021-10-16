@@ -1,2 +1,0 @@
-class PersonalWebsite < Website
-end
