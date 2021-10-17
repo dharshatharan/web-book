@@ -20,8 +20,13 @@ gem "redis-activesupport-with-cas"
 gem "redis-namespace"
 gem "redis-rails"
 # Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem "bcrypt", "~> 3.1.7"
 gem "cityhash"
+gem "data_uri", "~> 0.1.0"
+gem "json_web_token", "~> 0.3.5"
+gem "jwt"
+gem "kaminari-activerecord"
+gem "mini_magick"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
