@@ -1,2 +1,0 @@
-class WebsiteUser < ApplicationRecord
-end

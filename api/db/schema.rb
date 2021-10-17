@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2021_10_16_200442) do
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email"
-    t.string "password"
+    t.string "password_digest"
     t.string "role"
     t.string "username"
     t.string "display_name"
@@ -90,16 +90,6 @@ ActiveRecord::Schema.define(version: 2021_10_16_200442) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["tag_id"], name: "index_website_tags_on_tag_id"
     t.index ["website_id"], name: "index_website_tags_on_website_id"
-  end
-
-  create_table "website_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "role"
-    t.bigint "website_id"
-    t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_website_users_on_user_id"
-    t.index ["website_id"], name: "index_website_users_on_website_id"
   end
 
   create_table "websites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
