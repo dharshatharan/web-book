@@ -60,6 +60,8 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     ar_transaction_changes (1.1.8)
       activerecord (>= 5.2.0)
     ast (2.4.2)
@@ -72,6 +74,7 @@ GEM
     cityhash (0.9.0)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
+    dalli (3.0.2)
     data_uri (0.1.0)
     diff-lcs (1.4.4)
     docile (1.4.0)
@@ -139,6 +142,7 @@ GEM
     parser (3.0.2.0)
       ast (~> 2.4.1)
     promise.rb (0.7.4)
+    public_suffix (4.0.6)
     puma (5.5.2)
       nio4r (~> 2.0)
     racc (1.5.2)
@@ -183,33 +187,6 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    redis (4.5.1)
-    redis-actionpack (5.2.0)
-      actionpack (>= 5, < 7)
-      redis-rack (>= 2.1.0, < 3)
-      redis-store (>= 1.1.0, < 2)
-    redis-activesupport (5.2.1)
-      activesupport (>= 3, < 7)
-      redis-store (>= 1.3, < 2)
-    redis-activesupport-with-cas (0.0.6)
-      redis
-      redis-activesupport
-      redis-store
-      redis-store-with-cas
-    redis-namespace (1.8.1)
-      redis (>= 3.0.4)
-    redis-rack (2.1.3)
-      rack (>= 2.0.8, < 3)
-      redis-store (>= 1.2, < 2)
-    redis-rails (5.0.2)
-      redis-actionpack (>= 5.0, < 6)
-      redis-activesupport (>= 5.0, < 6)
-      redis-store (>= 1.2, < 2)
-    redis-store (1.9.0)
-      redis (>= 4, < 5)
-    redis-store-with-cas (0.0.5)
-      redis (>= 2.2)
-      redis-store (>= 1.1.0)
     regexp_parser (2.1.1)
     rexml (3.2.5)
     rouge (3.26.1)
@@ -286,10 +263,12 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  addressable
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
   byebug
   cityhash
+  dalli
   data_uri (~> 0.1.0)
   factory_bot_rails
   faker
@@ -310,10 +289,6 @@ DEPENDENCIES
   rack-cors
   rails (~> 6.1.4, >= 6.1.4.1)
   rails-erd
-  redis
-  redis-activesupport-with-cas
-  redis-namespace
-  redis-rails
   rspec-rails
   rubocop
   rubocop-faker

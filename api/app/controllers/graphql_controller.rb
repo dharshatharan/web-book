@@ -9,8 +9,7 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      current_user: current_user,
     }
     result = ApiSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render(json: result)
@@ -20,6 +19,15 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def current_user
+    header = request.headers[:Authentication]
+    decrypted = JWT.decode(header, Rails.application.secrets.secret_key_base.byteslice(0..31))[0] # decrypt token using secret key
+    user = User.fetch(decrypted["id"]) # find the user given the decrypted id
+    user
+  rescue JWT::DecodeError
+    nil
+  end
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)

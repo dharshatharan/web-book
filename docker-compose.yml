@@ -15,10 +15,10 @@ services:
         security_opt:
             - seccomp:unconfined
 
-    redis:
-        image: 'redis:alpine'
+    memcached:
+        image: 'memcached:alpine'
         ports:
-            - '6379:6379'
+            - '11211:11211'
         networks:
             - web-book
 
@@ -38,10 +38,10 @@ services:
             - "5000:5000"
         depends_on:
             - db
-            - redis
+            - memcached
         links:
             - db
-            - redis
+            - memcached
         networks:
             - web-book
 
