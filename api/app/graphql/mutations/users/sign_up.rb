@@ -6,7 +6,7 @@ module Mutations
       argument :password, String, required: true
       argument :passwordConfirmation, String, required: true
       argument :username, String, required: true
-			argument :display_name, String, required: false
+      argument :display_name, String, required: false
 
       type Types::UserType
 

@@ -17,7 +17,7 @@ gem "puma", "~> 5.0"
 # gem "redis"
 
 gem "identity_cache"
-gem 'dalli' # To use :mem_cache_store
+gem "dalli" # To use :mem_cache_store
 
 # Use Active Model has_secure_password
 gem "bcrypt", "~> 3.1.7"

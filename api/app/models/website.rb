@@ -8,8 +8,8 @@ class Website < ApplicationRecord
 
   # Relations
   belongs_to :owner, class_name: "User", optional: false
-  cache_belongs_to :user
+  cache_belongs_to :owner
   has_many :website_tags, dependent: :delete_all
   has_many :tags, through: :website_tags
-  has_many :followers, class_name: "User"
+  has_many :followers, class_name: "User", dependent: :delete_all
 end

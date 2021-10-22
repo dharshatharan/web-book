@@ -3,7 +3,7 @@ SimpleCov.start do
   add_group "Models", "app/models"
   # add_group 'Controllers', 'app/controllers'
   add_group "Queries", "app/graphql/queries"
-  # add_group "Mutations", "app/graphql/mutations"
+  add_group "Mutations", "app/graphql/mutations"
   add_group "Types", "app/graphql/types"
   add_filter "config/environment.rb"
   add_filter "spec/rails_helper.rb"

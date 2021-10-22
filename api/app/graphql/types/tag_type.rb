@@ -1,7 +1,7 @@
 module Types
-	# Type for Tag Model
+  # Type for Tag Model
   class TagType < Types::BaseObject
-		description "A type that represents a single Tag entity"
+    description "A type that represents a single Tag entity"
 
     field :id, ID, null: false
     field :name, String, null: false

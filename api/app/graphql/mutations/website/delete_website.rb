@@ -20,7 +20,6 @@ module Mutations
         else
           raise GraphQL::ExecutionError, "ERROR: Current User is not the owner of this Website"
         end
-
       rescue ActiveRecord::RecordNotFound
         GraphQL::ExecutionError.new("ERROR: Website of given ID is nil")
       end
