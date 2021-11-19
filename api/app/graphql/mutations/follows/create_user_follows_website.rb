@@ -1,5 +1,5 @@
 module Mutations
-  module UserFollowsWebsites
+  module Follows
     # Mutation that creates an UserFollowsWebsite entity with the provided Website
     class CreateUserFollowsWebsite < BaseMutation
       argument :website_id, ID, required: true

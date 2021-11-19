@@ -1,5 +1,5 @@
 module Mutations
-  module UserFollowsTags
+  module Follows
     # Mutation that creates an UserFollowsTag entity with the provided Tag
     class CreateUserFollowsTag < BaseMutation
       argument :tag_id, ID, required: true
