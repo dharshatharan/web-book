@@ -14,32 +14,26 @@ RSpec.describe("Website Queries") do
     create(:website, owner_id: @user.id)
   end
 
-  # describe Queries::Website do
-  #   context "when passed the id of the first website" do
-  #     it "returns a website with the id of the first website" do
-  #       first_website_id = Website.first.id
+  describe Queries::Website do
+    context "when passed the id of the first website" do
+      it "returns a website with the id of the first website" do
+        first_website_id = Website.first.id
 
-  #       prepare_query('query website($id: ID!){
-  #                       website(id: $id) {
-  #                           id
-  #                           tags{
-  #                             id
-  #                           }
-  #                           owner{
-  #                             id
-  #                           }
-  #                       }
-  #                     }')
+        prepare_query('query website($id: ID!){
+                        website(id: $id) {
+                            id
+                        }
+                      }')
 
-  #       prepare_query_variables(
-  #         id: first_website_id
-  #       )
+        prepare_query_variables(
+          id: first_website_id
+        )
 
-  #       website_id = graphql!
-  #       expect(website_id).to(eq(first_website_id))
-  #     end
-  #   end
-  # end
+        website_id = graphql!["data"]["website"]["id"].to_i
+        expect(website_id).to(eq(first_website_id))
+      end
+    end
+  end
 
   # describe Queries::Website do
   #   context "when passed the id of a private website" do

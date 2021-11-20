@@ -5,9 +5,13 @@ module Types
     field :id, ID, null: false
     field :domain, String, null: false
     field :url, String, null: false
-    field :owner, String, null: false
+    field :owner, Types::UserType, null: false
     field :tags, [Types::TagType], null: false
     field :followers, [Types::UserType], null: false
+
+    def owner
+      Loaders::AssociationLoader.for(Website, :owner).load(object)
+    end
 
     def tags
       Loaders::AssociationLoader.for(Website, :tags).load(object)

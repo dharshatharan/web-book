@@ -7,7 +7,7 @@ module Queries
 
     def resolve(id:)
       website = ::Website.fetch(id)
-      return GraphQL::ExecutionError.new("ERROR: Website of given ID is nil") if website.nil? || website.state == "private"
+      return GraphQL::ExecutionError.new("ERROR: Website of given ID is nil") if website.nil?
 
       website
     rescue ActiveRecord::RecordNotFound
