@@ -12,4 +12,12 @@ class Website < ApplicationRecord
   has_many :website_tags, dependent: :delete_all
   has_many :tags, through: :website_tags
   has_many :followers, class_name: "User", dependent: :delete_all
+
+  def search_string
+    owner = self.owner
+    Rails.cache.fetch([cache_key, __method__]) do
+      s = domain + " " + url + " " + owner.username + " " + owner.display_name + " "
+      s + tags.map(&:name).join(", ")
+    end
+  end
 end

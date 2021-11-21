@@ -13,5 +13,7 @@ module Types
     field :users, resolver: Queries::Users
     field :website, resolver: Queries::Website
     field :websites, resolver: Queries::Websites
+    field :website_search, resolver: Queries::WebsiteSearch
+    field :websites_listed, resolver: Queries::WebsitesListed
   end
 end
