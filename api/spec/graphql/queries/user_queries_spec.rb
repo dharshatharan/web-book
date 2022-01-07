@@ -8,6 +8,7 @@ RSpec.describe("User Queries") do
     create_list(:user, 2)
 
     @user = create(:user, email: "user@email.com", password: "1234")
+    @website = create(:website, owner: @user)
   end
 
   describe Queries::Users do
@@ -61,6 +62,113 @@ RSpec.describe("User Queries") do
 
         graphql_result = graphql!
         expect(graphql_result["errors"][0]["message"]).to(eq("ERROR: User of given ID is nil"))
+      end
+    end
+  end
+
+  describe Queries::User do
+    before do
+      3.times do
+        website = create(:website, owner: @user)
+        create(:user_follows_website, user: @user, website: website)
+      end
+    end
+
+    context "when user follows 3 websites" do
+      it "returns 3 followed_websites" do
+        prepare_query('query user($id: ID!){
+                user(id: $id) {
+                    followedWebsites {
+                        id
+                    }
+                  }
+                }')
+
+        prepare_query_variables(
+          id: @user.id
+        )
+
+        followed_websites = graphql!["data"]["user"]["followedWebsites"]
+        expect(followed_websites.length).to(eq(3))
+      end
+    end
+  end
+
+  describe Queries::User do
+    before do
+      3.times do
+        tag = create(:tag)
+        create(:user_follows_tag, user: @user, tag: tag)
+      end
+    end
+
+    context "when user follows 3 tag" do
+      it "returns 3 followed_tag" do
+        prepare_query('query user($id: ID!){
+                user(id: $id) {
+                    followedTags {
+                        id
+                    }
+                  }
+                }')
+
+        prepare_query_variables(
+          id: @user.id
+        )
+
+        followed_tag = graphql!["data"]["user"]["followedTags"]
+        expect(followed_tag.length).to(eq(3))
+      end
+    end
+  end
+
+  describe Queries::User do
+    context "when user has a personal website" do
+      before do
+        @website = create(:website, owner: @user)
+        @user.personal_website = @website
+        @user.save
+      end
+
+      it "return personal website" do
+        prepare_query('query user($id: ID!){
+                user(id: $id) {
+                    personalWebsite {
+                        id
+                    }
+                  }
+                }')
+
+        prepare_query_variables(
+          id: @user.id
+        )
+
+        personal_website_id = graphql!["data"]["user"]["personalWebsite"]["id"].to_i
+        expect(personal_website_id).to(eq(@website.id))
+      end
+    end
+
+    context "when user does not have a personal website" do
+      before do
+        @user.personal_website = nil
+        @user.save
+      end
+
+      it "does not retuen a website" do
+        prepare_query('query user($id: ID!){
+                user(id: $id) {
+                    followedWebsites {
+                        id
+                    }
+                  }
+                }')
+
+        prepare_query_variables(
+          id: @user.id
+        )
+
+        followed_websites = graphql!["data"]["user"]["personalWebsite"]
+        expect(followed_websites).to(eq(nil))
       end
     end
   end

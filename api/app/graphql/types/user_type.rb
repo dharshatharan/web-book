@@ -9,7 +9,7 @@ module Types
     field :display_name, String, null: true
     field :avatar, String, null: false
     field :personal_website_id, Integer, null: true
-    field :personal_website, Types::WebsiteType, null: false
+    field :personal_website, Types::WebsiteType, null: true
     field :followed_websites, [Types::WebsiteType], null: false
     field :followed_tags, [Types::TagType], null: false
 

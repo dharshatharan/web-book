@@ -11,9 +11,11 @@ class User < ApplicationRecord
   validates :role, presence: true, inclusion: { in: ["public", "admin"] }
 
   # Relations
-  has_many :followed_websites, class_name: "UserFollowsWebsite", dependent: :delete_all
-  has_many :followed_tags, class_name: "UserFollowsTag", dependent: :delete_all
-  has_one :personal_website, class_name: "Website", dependent: :delete
+  belongs_to :personal_website, class_name: "Website", dependent: :destroy, optional: true
+  has_many :user_follows_website, dependent: :delete_all
+  has_many :followed_websites, through: :user_follows_website, source: :website
+  has_many :user_follows_tag, dependent: :delete_all
+  has_many :followed_tags, through: :user_follows_tag, source: :tag
 
   # Active Storage
   has_one_attached :avatar

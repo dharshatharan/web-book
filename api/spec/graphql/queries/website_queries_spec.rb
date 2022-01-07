@@ -72,12 +72,12 @@ RSpec.describe("Website Queries") do
     context "when there are 4 websites in the database with same name" do
       it "returns a search result with a length of 4" do
         prepare_query('query{
-                    websitesListed(page:1, limit:24){
-                        collection{
-                          id
+                        websitesListed(page:1, limit:24){
+                          collection{
+                            id
+                          }
                         }
-                      }
-                    }')
+                      }')
 
         websites = graphql!["data"]["websitesListed"]["collection"]
         expect(websites.length).to(eq(4))
