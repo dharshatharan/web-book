@@ -1,0 +1,9 @@
+FROM ruby:3.0.2-slim-buster
+
+RUN apt-get update \
+	&& apt-get install -y \
+	nodejs \
+	build-essential \
+	default-mysql-client \
+	default-libmysqlclient-dev \
+	&& rm -rf /var/lib/apt/lists/*
