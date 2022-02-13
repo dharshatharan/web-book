@@ -4,7 +4,7 @@ require "rails_helper"
 RSpec.describe("Unfollow Website") do
   before do
     @user = create(:user, email: "user@email.com", username: "username", password: "password")
-		@user2 = create(:user, email: "user2@email.com", username: "username2", password: "password")
+    @user2 = create(:user, email: "user2@email.com", username: "username2", password: "password")
     prepare_query_variables({})
     prepare_context({})
   end
@@ -16,7 +16,7 @@ RSpec.describe("Unfollow Website") do
       })
 
       website = create(:website, owner: @user2)
-			create(:user_follows_website, website: website, user: @user)
+      create(:user_follows_website, website: website, user: @user)
 
       query = <<~GRAPHQL
         mutation deleteUserFollowsWebsite($websiteId: Int!) {
@@ -41,8 +41,8 @@ RSpec.describe("Unfollow Website") do
         current_user: @user,
       })
 
-			website = create(:website, owner: @user2)
-			create(:user_follows_website, website: website, user: @user)
+      website = create(:website, owner: @user2)
+      create(:user_follows_website, website: website, user: @user)
 
       query = <<~GRAPHQL
         mutation deleteUserFollowsWebsite($websiteId: Int!) {
@@ -66,7 +66,7 @@ RSpec.describe("Unfollow Website") do
         current_user: @user,
       })
 
-			website = create(:website, owner: @user2)
+      website = create(:website, owner: @user2)
 
       query = <<~GRAPHQL
         mutation deleteUserFollowsWebsite($websiteId: Int!) {
@@ -87,7 +87,7 @@ RSpec.describe("Unfollow Website") do
 
     it "if not logged in, error is returned" do
       website = create(:website, owner: @user2)
-			create(:user_follows_website, website: website, user: @user)
+      create(:user_follows_website, website: website, user: @user)
 
       query = <<~GRAPHQL
         mutation deleteUserFollowsWebsite($websiteId: Int!) {
@@ -106,13 +106,13 @@ RSpec.describe("Unfollow Website") do
       expect(result["errors"][0]["message"]).to(eq("ERROR: Not logged in or missing token"))
     end
 
-		it "if user if owner of website, error is returned" do
+    it "if user if owner of website, error is returned" do
       prepare_context({
         current_user: @user,
       })
 
       website = create(:website, owner: @user)
-			create(:user_follows_website, website: website, user: @user)
+      create(:user_follows_website, website: website, user: @user)
 
       query = <<~GRAPHQL
         mutation deleteUserFollowsWebsite($websiteId: Int!) {

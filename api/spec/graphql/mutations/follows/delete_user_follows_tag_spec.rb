@@ -15,7 +15,7 @@ RSpec.describe("Unfollow Tag") do
       })
 
       tag = create(:tag)
-			create(:user_follows_tag, tag: tag, user: @user)
+      create(:user_follows_tag, tag: tag, user: @user)
 
       query = <<~GRAPHQL
         mutation deleteUserFollowsTag($tagId: Int!) {
@@ -40,8 +40,8 @@ RSpec.describe("Unfollow Tag") do
         current_user: @user,
       })
 
-			tag = create(:tag)
-			create(:user_follows_tag, tag: tag, user: @user)
+      tag = create(:tag)
+      create(:user_follows_tag, tag: tag, user: @user)
 
       query = <<~GRAPHQL
         mutation deleteUserFollowsTag($tagId: Int!) {
@@ -65,7 +65,7 @@ RSpec.describe("Unfollow Tag") do
         current_user: @user,
       })
 
-			tag = create(:tag)
+      tag = create(:tag)
 
       query = <<~GRAPHQL
         mutation deleteUserFollowsTag($tagId: Int!) {
@@ -86,7 +86,7 @@ RSpec.describe("Unfollow Tag") do
 
     it "if not logged in, error is returned" do
       tag = create(:tag)
-			create(:user_follows_tag, tag: tag, user: @user)
+      create(:user_follows_tag, tag: tag, user: @user)
 
       query = <<~GRAPHQL
         mutation deleteUserFollowsTag($tagId: Int!) {
