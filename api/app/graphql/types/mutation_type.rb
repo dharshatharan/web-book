@@ -13,6 +13,8 @@ module Types
 
     # Follow
     field :create_user_follows_tag, mutation: Mutations::Follows::CreateUserFollowsTag, description: "Create a follow relation to the tag specified for the user"
+    field :delete_user_follows_tag, mutation: Mutations::Follows::DeleteUserFollowsTag, description: "Delete a follow relation to the tag specified for the user"
     field :create_user_follows_website, mutation: Mutations::Follows::CreateUserFollowsWebsite, description: "Create a follow relation to the website specified for the user"
+    field :delete_user_follows_website, mutation: Mutations::Follows::DeleteUserFollowsWebsite, description: "Delete a follow relation to the website specified for the user"
   end
 end
