@@ -6,10 +6,10 @@ module Mutations
 
       type Types::WebsiteType
 
-      def resolve(title:, description:, price:, website:)
+      def resolve(url:)
         user = context[:current_user]
         return GraphQL::ExecutionError.new("ERROR: Not logged in or missing token") if user.nil?
-        uri = URI(website)
+        uri = URI(url)
         return GraphQL::ExecutionError.new("ERROR: Invalid URL") if uri.nil? || uri.host.nil?
 
         ::Website.create!(
@@ -17,10 +17,6 @@ module Mutations
           url: url,
           owner_id: user.id,
         )
-
-        raise GraphQL::ExecutionError, user.errors.full_messages.join(", ") unless user.errors.empty?
-
-        user
       end
     end
   end

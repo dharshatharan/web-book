@@ -12,7 +12,7 @@ module Mutations
 
         tag = Tag.find(tag_id)
         return GraphQL::ExecutionError.new("ERROR: Requested Tag does not exist") if tag.nil?
-        return GraphQL::ExecutionError.new("ERROR: User cannot follow their own Tag") if user == tag.owner
+        return GraphQL::ExecutionError.new("ERROR: User already follows Tag") if user.followed_tags.include?(tag)
 
         ActiveRecord::Base.transaction do
           ::UserFollowsTag.create!(

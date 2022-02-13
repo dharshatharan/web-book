@@ -53,29 +53,4 @@ RSpec.describe(Tag, type: :model) do
       end
     end
   end
-
-  # describe Queries::Websites do
-  #   before do
-  #     prepare_query_variables({})
-  #     prepare_context({})
-
-  #     # website.id = 1
-  #     # tag.id = 1
-  #     @website_tag = create(:website_tag, website: website, tag: tag)
-  #   end
-
-  #   context "when there are 3 tags in the database" do
-  #     it "returns a result with a length of 3" do
-  #       prepare_query('{
-  #               tags{
-  #                   websites
-  #               }
-  #           }')
-
-  #       puts(graphql!["data"])
-  #       tags = graphql!["data"]["tags"]
-  #       expect(tags.length).to(eq(1))
-  #     end
-  #   end
-  # end
 end

@@ -13,6 +13,7 @@ module Mutations
         website = Website.find(website_id)
         return GraphQL::ExecutionError.new("ERROR: Requested Website does not exist") if website.nil?
         return GraphQL::ExecutionError.new("ERROR: User cannot follow their own Website") if user == website.owner
+        return GraphQL::ExecutionError.new("ERROR: User already follows Website") if user.followed_websites.include?(website)
 
         ActiveRecord::Base.transaction do
           ::UserFollowsWebsite.create!(

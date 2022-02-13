@@ -11,7 +11,8 @@ class Website < ApplicationRecord
   cache_belongs_to :owner
   has_many :website_tags, dependent: :delete_all
   has_many :tags, through: :website_tags
-  has_many :followers, class_name: "User", dependent: :delete_all, through: :user_follows_website
+  has_many :user_follows_website, dependent: :delete_all
+  has_many :followers, dependent: :delete_all, through: :user_follows_website, source: :user
 
   def search_string
     owner = self.owner

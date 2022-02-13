@@ -2,6 +2,7 @@ module Mutations
   module Websites
     # Mutation updates the website of the provided id
     class UpdateWebsite < BaseMutation
+      argument :id, Int, required: true
       argument :url, String, required: true
 
       type Types::WebsiteType
@@ -14,7 +15,7 @@ module Mutations
 
         if website_search.owner_id == user.id
 
-          website_search.url = url if title.present?
+          website_search.url = url
           website_search.save!
 
           raise GraphQL::ExecutionError, website_search.errors.full_messages.join(", ") unless website_search.errors.empty?
