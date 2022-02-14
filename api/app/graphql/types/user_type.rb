@@ -7,16 +7,18 @@ module Types
     field :role, String, null: true
     field :username, String, null: true
     field :display_name, String, null: true
-    field :avatar, String, null: false
+    field :avatar_url, String, null: true
     field :personal_website_id, Integer, null: true
     field :personal_website, Types::WebsiteType, null: true
     field :followed_websites, [Types::WebsiteType], null: false
     field :followed_tags, [Types::TagType], null: false
 
-    def avatar
-      Loaders::ActiveStorageLoader.for(:Image, :attached_image).load(object.id).then do |image|
-        Rails.application.routes.url_helpers
-          .rails_blob_url(image, only_path: true)
+    def avatar_url
+      if object.avatar.attached?
+        Loaders::ActiveStorageLoader.for(:Image, :avatar).load(object.id).then do |image|
+          Rails.application.routes.url_helpers
+            .rails_blob_url(image, only_path: true)
+        end
       end
     end
 

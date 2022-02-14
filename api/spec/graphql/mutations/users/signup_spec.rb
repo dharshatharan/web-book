@@ -12,8 +12,8 @@ RSpec.describe("Sign up") do
       prepare_context({})
 
       query = <<~GRAPHQL
-        mutation signUp($email: String!, $password: String!, $passwordConfirmation: String!, $username: String!) {
-            signUp(input: { email: $email, password: $password, passwordConfirmation: $passwordConfirmation, username: $username }){
+        mutation signUp($email: String!, $password: String!, $passwordConfirmation: String!, $username: String!, $avatar: File!) {
+            signUp(input: { email: $email, password: $password, passwordConfirmation: $passwordConfirmation, username: $username, avatar: $avatar }){
             id
           }
         }
@@ -21,11 +21,19 @@ RSpec.describe("Sign up") do
 
       prepare_query(query)
 
+      file = Tempfile.open("#{Rails.root}/assets/avatar.png")
+      upload = ActionDispatch::Http::UploadedFile.new(
+        filename: "avatar.png",
+        type: "image/png",
+        tempfile: file
+      )
+
       prepare_query_variables(
         email: "test@email.com",
         password: "password",
         passwordConfirmation: "password",
-        username: "username"
+        username: "username",
+        avatar: upload
       )
 
       result = graphql!

@@ -6,10 +6,11 @@ module Mutations
       argument :password, String, required: false
       argument :username, String, required: false
       argument :display_name, String, required: false
+      argument :avatar, Types::File, required: false
 
       type Types::UserType
 
-      def resolve(email: nil, password: nil, username: nil, display_name: nil)
+      def resolve(email: nil, password: nil, username: nil, display_name: nil, avatar: nil)
         user = context[:current_user]
         return GraphQL::ExecutionError.new("ERROR: Not logged in or missing token") if user.nil?
 
@@ -17,6 +18,7 @@ module Mutations
         user.password = password if password.present?
         user.username = username if username.present?
         user.username = username if username.present?
+        user.avatar = avatar if avatar.present?
         user.save!
 
         raise GraphQL::ExecutionError, user.errors.full_messages.join(", ") unless user.errors.empty?

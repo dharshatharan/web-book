@@ -15,8 +15,8 @@ RSpec.describe("Update User") do
       })
 
       query = <<~GRAPHQL
-        mutation updateUser($username: String!) {
-          updateUser(input: { username: $username }){
+        mutation updateUser($username: String!, $avatar: File!) {
+          updateUser(input: { username: $username, avatar: $avatar }){
               id
               username
           }
@@ -25,8 +25,16 @@ RSpec.describe("Update User") do
 
       prepare_query(query)
 
+      file = Tempfile.open("#{Rails.root}/assets/avatar.png")
+      upload = ActionDispatch::Http::UploadedFile.new(
+        filename: "avatar.png",
+        type: "image/png",
+        tempfile: file
+      )
+
       prepare_query_variables(
-        username: "test2"
+        username: "test2",
+        avatar: upload
       )
 
       result = graphql!

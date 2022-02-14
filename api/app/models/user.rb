@@ -25,10 +25,12 @@ class User < ApplicationRecord
     super || username
   end
 
-  def attached_image_url
-    Rails.cache.fetch([cache_key, __method__]) do
-      Rails.application.routes.url_helpers
-        .rails_blob_url(avatar, only_path: true)
+  def avatar_url
+    if avatar.attached?
+      Rails.cache.fetch([cache_key, __method__]) do
+        Rails.application.routes.url_helpers
+          .rails_blob_url(avatar, only_path: true)
+      end
     end
   end
 end
