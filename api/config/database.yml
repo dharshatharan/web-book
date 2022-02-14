@@ -16,10 +16,11 @@ default: &default
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
   host: <%= ENV['DB_HOST'] %>
-  database: <%= ENV['DB_NAME'] %>
+  socket: /var/run/mysqld/mysqld.sock
 
 development:
   <<: *default
+  database: <%= ENV['DB_NAME'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -28,9 +29,9 @@ test:
   # <<: *default
   adapter: mysql2
   host: 127.0.0.1
-  port: 3307
+  port: 3306
   encoding: utf8mb4
-  database: webbookDev
+  database: webbookTest
   pool: 20
   username: root
   password: root

@@ -28,18 +28,14 @@ Rails.application.configure do
 
   #   config.cache_store = :null_store
   # end
-  config.cache_store = :redis_store_with_cas, {
-    host: 'localhost',
-    port: 6379,
-    db: 0,
-    namespace: 'cache',
-    expires_in: 15.minutes,
-    race_condition_ttl: 1,
+
+  config.identity_cache_store = :mem_cache_store, "0.0.0.0", {
+    expires_in: 15.minutes.to_i, # in case of network errors when sending a cache invalidation
+    failover: false, # avoids more cache consistency issues
   }
   
-  IdentityCache.cache_backend = ActiveSupport::Cache.lookup_store(*Rails.configuration.cache_store)
-  config.active_record.cache_versioning = false
-  # Redis.exists_returns_integer = false
+  IdentityCache.cache_backend = ActiveSupport::Cache.lookup_store(*Rails.configuration.identity_cache_store)
+  # config.active_record.cache_versioning = false
 
 
   # Store uploaded files on the local file system (see config/storage.yml for options).

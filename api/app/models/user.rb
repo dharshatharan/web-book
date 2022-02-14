@@ -11,10 +11,11 @@ class User < ApplicationRecord
   validates :role, presence: true, inclusion: { in: ["public", "admin"] }
 
   # Relations
-  has_many :user_follows_websites, dependent: :delete_all
-  has_many :user_follows_tags, dependent: :delete_all
-  has_many :website_user, dependent: :delete_all
-  has_one :personal_website, class_name: "Website", dependent: :delete
+  belongs_to :personal_website, class_name: "Website", dependent: :destroy, optional: true
+  has_many :user_follows_website, dependent: :delete_all
+  has_many :followed_websites, through: :user_follows_website, source: :website
+  has_many :user_follows_tag, dependent: :delete_all
+  has_many :followed_tags, through: :user_follows_tag, source: :tag
 
   # Active Storage
   has_one_attached :avatar
@@ -24,10 +25,12 @@ class User < ApplicationRecord
     super || username
   end
 
-  def attached_image_url
-    Rails.cache.fetch([cache_key, __method__]) do
-      Rails.application.routes.url_helpers
-        .rails_blob_url(avatar, only_path: true)
+  def avatar_url
+    if avatar.attached?
+      Rails.cache.fetch([cache_key, __method__]) do
+        Rails.application.routes.url_helpers
+          .rails_blob_url(avatar, only_path: true)
+      end
     end
   end
 end

@@ -30,8 +30,8 @@ RSpec.describe(Website, type: :model) do
       end
     end
 
-    context "when website has negative price" do
-      before { website.domain = "invalid" }
+    context "when website has no owner" do
+      before { website.owner_id = nil }
 
       it "returns false" do
         expect(result).to(be(false))
