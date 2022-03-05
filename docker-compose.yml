@@ -11,7 +11,7 @@ services:
         ports:
             - "3306:3306"
         networks:
-            - web-book
+            - backend
         security_opt:
             - seccomp:unconfined
 
@@ -20,7 +20,7 @@ services:
         ports:
             - '11211:11211'
         networks:
-            - web-book
+            - backend
 
     api:
         build: api
@@ -41,8 +41,24 @@ services:
             - db
             - memcached
         networks:
-            - web-book
+            - backend
+            - client-server
+
+    client:
+        build: client
+        volumes:
+            - .:/usr/src/app
+        ports:
+            - "3000:3000"
+        networks:
+            - client-server
+        depends_on:
+            - api
+        links:
+            - api
 
 networks:
-    web-book:
+    backend:
+        driver: bridge
+    client-server:
         driver: bridge
