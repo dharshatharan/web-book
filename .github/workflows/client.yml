@@ -10,10 +10,14 @@ jobs:
       run: |
         cd client
         npm install
-    # - name: Run Prettier
-    #   run: |
-    #     cd client
-    #     yarn run format
+    - name: Run Lint
+      run: |
+        cd client
+        npm run lint
+    - name: Run Prettier
+      run: |
+        cd client
+        npm run format
     # - name: Run Jest
     #   run: |
     #     cd client
